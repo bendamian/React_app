@@ -67,7 +67,7 @@ ul li::before {
   content: "\200B";
 }
 
-.item {
+.book {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -76,11 +76,11 @@ ul li::before {
   background-color: #eee;
 }
 
-.item:first-child {
+.book:first-child {
   margin: 0;
 }
 
-.item input[type="checkbox"] {
+.book input[type="checkbox"] {
   text-align: center;
   width: 2.5rem;
   width: 48px;
@@ -92,16 +92,16 @@ ul li::before {
   margin-right: 0.5rem;
 }
 
-.item input[type="checkbox"]:focus + label {
+.book input[type="checkbox"]:focus + label {
   text-decoration: underline;
 }
 
-.item > label {
+.book > label {
   font-size: 0.75rem;
   flex-grow: 1;
 }
 
-.item svg {
+.book svg {
   width: 48px;
   min-width: 48px;
   height: 36px;
@@ -110,8 +110,8 @@ ul li::before {
   cursor: pointer;
 }
 
-.item svg:focus,
-.item svg:hover {
+.book svg:focus,
+.book svg:hover {
   color: red;
   outline: none;
 }
