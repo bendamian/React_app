@@ -3,11 +3,13 @@ import Content from "./Content";
 import Footer from "./Footer";
 import { useState } from "react";
 import AddBook from "./AddBook";
+import SearchBook from "./SearchBook";
 
 function App() {
   const [books, setBook] = useState(JSON.parse(localStorage.getItem('bookList')));
 
   const [newBook, setNewBook] = useState("");
+  const [search,setSearch] = useState('')
 
   const setAndSaveBook = newBooks => {
     setBook(newBooks);
@@ -50,8 +52,13 @@ function App() {
         setNewBook={setNewBook}
         handleSubmit={handleSubmit}
       />
+      <SearchBook 
+      search = {search}
+      setSearch = {setSearch}
+      
+      />
       <Content
-        books={books}
+        books={books.filter(book => (book.book).toLowerCase().includes(search.toLowerCase()))}
         handleCheched={handleCheched}
         handleDelete={handleDelete}
       />
