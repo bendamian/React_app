@@ -1,0 +1,19 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "checked": true,
+      "book": "JavaScript and JQuery"
+    },
+    {
+      "id": 2,
+      "checked": false,
+      "book": "The Principles of Object-Oriented JavaScript"
+    },
+    {
+      "id": 3,
+      "checked": false,
+      "book": "JavaScript from Beginner to Professional"
+    }
+  ]
+}
