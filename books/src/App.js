@@ -6,16 +6,31 @@ import AddBook from "./AddBook";
 import SearchBook from "./SearchBook";
 
 function App() {
-  const [books, setBook] = useState(
-    JSON.parse(localStorage.getItem("bookList")) || []
-  );
-
+  const API_URL = "http://localhost:3500/books";
+  const [books, setBook] = useState([]);
   const [newBook, setNewBook] = useState("");
   const [search,setSearch] = useState('')
+  const[fetchErr,setfetchErr] = useState(null)
+  const[isLoding ,setIsLoding] = useState(true)
 
   useEffect(()=>{
-localStorage.setItem('bookList', JSON.stringify(books));
-  },[books])
+const fetchBooks = async () =>{
+  try{
+    const response = await fetch(API_URL)
+    if(!response.ok) throw Error('Did not receive data from server')
+     const bookCollection = await response.json();
+     setBook(bookCollection)
+     setfetchErr(null)
+    // console.log(bookCollection)
+  }catch(err){
+    setfetchErr(err.message);
+     // console.log(err.message)
+
+  }finally{setIsLoding(false)}
+}
+setTimeout( ()=>{(async () => await fetchBooks())();}, 2000)
+
+  },[])
 
 
 
@@ -55,16 +70,18 @@ localStorage.setItem('bookList', JSON.stringify(books));
         setNewBook={setNewBook}
         handleSubmit={handleSubmit}
       />
-      <SearchBook 
-      search = {search}
-      setSearch = {setSearch}
-      
-      />
-      <Content
-        books={books.filter(book => (book.book).toLowerCase().includes(search.toLowerCase()))}
-        handleCheched={handleCheched}
-        handleDelete={handleDelete}
-      />
+      <SearchBook search={search} setSearch={setSearch} />
+      <main>
+        {isLoding && <p>Loding Books...</p>}
+        {fetchErr && <p style={{color:'red'}}>{`Error:${fetchErr}`}</p>}
+        {!fetchErr && !isLoding &&<Content
+          books={books.filter(book =>
+            book.book.toLowerCase().includes(search.toLowerCase())
+          )}
+          handleCheched={handleCheched}
+          handleDelete={handleDelete}
+        />}
+      </main>
       <Footer length={books.length} />
     </div>
   );

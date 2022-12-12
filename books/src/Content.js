@@ -4,7 +4,7 @@ import BookList from "./BookList";
 
 function Content({ books, handleCheched, handleDelete }) {
   return (
-    <main>
+    <>
       {books.length ? (
         <BookList
           key={books.id}
@@ -15,7 +15,7 @@ function Content({ books, handleCheched, handleDelete }) {
       ) : (
         <p style={{ marginTop: "2rem" }}> Empty Book List.</p>
       )}
-    </main>
+    </>
   );
 }
 
