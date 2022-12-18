@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { useState ,useEffect} from "react";
 import AddBook from "./AddBook";
 import SearchBook from "./SearchBook";
+import apiRequest from "./apiRequest";
 
 function App() {
   const API_URL = "http://localhost:3500/books";
@@ -34,23 +35,52 @@ setTimeout( ()=>{(async () => await fetchBooks())();}, 2000)
 
 
 
-  const addBook = book => {
+  const addBook = async (book) => {
     const id = books.length ? books[books.length - 1].id + 1 : 1;
     const myNewBook = { id, checked: false, book };
     const bookList = [...books, myNewBook];
     setBook(bookList);
+const postOptions = {
+  method:'POST',
+  headers:{
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(myNewBook)
+}
+
+const result = await apiRequest(API_URL,postOptions);
+if (result) setfetchErr(result)
+
   };
 
-  const handleCheched = id => {
+  const handleCheched = async id => {
     const bookList = books.map(book =>
       book.id === id ? { ...book, checked: !book.checked } : book
     );
     setBook(bookList);
+   const myBook = bookList.filter((book) => book.id === id);
+   
+const updateOptions = {
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({checked:myBook[0].checked})
+};
+
+const reqUrl = `${API_URL}/${id}`
+
+const result = await apiRequest(reqUrl,updateOptions)
+if (result) setfetchErr(result);
   };
 
-  const handleDelete = id => {
+  const handleDelete = async (id) => {
     const bookList = books.filter(book => book.id !== id);
     setBook(bookList);
+  const deleteOptions = {method:'DELETE'};
+  const reqUrl = `${API_URL}/${id}`;
+  const result = await apiRequest(reqUrl, deleteOptions);
+  if (result) setfetchErr(result);
   };
 
   const handleSubmit = e => {

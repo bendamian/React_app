@@ -2,7 +2,7 @@
   "books": [
     {
       "id": 1,
-      "checked": true,
+      "checked": false,
       "book": "JavaScript and JQuery"
     },
     {
@@ -14,6 +14,11 @@
       "id": 3,
       "checked": false,
       "book": "JavaScript from Beginner to Professional"
+    },
+    {
+      "id": 4,
+      "checked": false,
+      "book": "Head First Java"
     }
   ]
 }
